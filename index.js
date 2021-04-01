@@ -1,6 +1,7 @@
 // module
 const gameBoard = (mark) => {
 	// const wrapper = document.querySelector('.wrapper');
+
 	const s1 = document.querySelector('.space1');
 	const s2 = document.querySelector('.space2');
 	const s3 = document.querySelector('.space3');
@@ -23,8 +24,6 @@ const gameBoard = (mark) => {
 		s9
 	];
 
-	// s1.textContent = 'x';
-
 	const displayMoves = () => {
 		gameArea.forEach((space) => {
 			space.addEventListener('click', () => {
@@ -44,18 +43,24 @@ const gameBoard = (mark) => {
 // factory
 const Player = (name, marker) => {
 	const player = () => {
-		console.log(name);
+		return name;
 	};
 	const mark = () => {
-		console.log(marker);
+		return marker;
 	};
 	return { player, mark };
 };
 
 // module
 const gameFlow = (() => {
-	const playerOne = Player('CP', 'x');
-	const playerTwo = Player('Comp', 'o');
+	const playerOne = Player(prompt('What Shall We Call You?', 'Player'), 'X');
+	const playerTwo = Player('Comp', 'O');
+
+	const p1 = document.querySelector('.playerOne');
+	const p2 = document.querySelector('.playerTwo');
+
+	p1.textContent = `${playerOne.player()} [${playerOne.mark()}]`;
+	p2.textContent = `${playerTwo.player()} [${playerTwo.mark()}]`;
 
 	const displayMarks = gameBoard('x');
 
