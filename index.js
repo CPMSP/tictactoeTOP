@@ -59,15 +59,19 @@ const gameFlow = (() => {
 	const p1 = document.querySelector('.playerOne');
 	const p2 = document.querySelector('.playerTwo');
 
+	// display players and their respective marks
 	p1.textContent = `${playerOne.player()} [${playerOne.mark()}]`;
 	p2.textContent = `${playerTwo.player()} [${playerTwo.mark()}]`;
-
-	const displayMarks = gameBoard('x');
-
-	displayMarks.displayMoves();
 
 	playerOne.player();
 	playerOne.mark();
 	playerTwo.player();
 	playerTwo.mark();
+
+	// what actually displays in the gameboard
+	const p1Moves = gameBoard('X');
+	const p2Moves = gameBoard('O');
+
+	p1Moves.displayMoves();
+	// p2Moves.displayMoves();
 })();
