@@ -1,7 +1,5 @@
-// module
-const gameBoard = (mark) => {
-	// const wrapper = document.querySelector('.wrapper');
-
+// module for gameboard, with gameboard spaces array
+const Gameboard = () => {
 	const s1 = document.querySelector('.space1');
 	const s2 = document.querySelector('.space2');
 	const s3 = document.querySelector('.space3');
@@ -12,7 +10,7 @@ const gameBoard = (mark) => {
 	const s8 = document.querySelector('.space8');
 	const s9 = document.querySelector('.space9');
 
-	const gameArea = [
+	const gameBoard = [
 		s1,
 		s2,
 		s3,
@@ -24,54 +22,55 @@ const gameBoard = (mark) => {
 		s9
 	];
 
-	const displayMoves = () => {
-		gameArea.forEach((space) => {
+	const spaceListeners = (mark) => {
+		gameBoard.forEach((space) => {
 			space.addEventListener('click', () => {
-				if ((space.textContent = ' ')) {
-					space.textContent = mark;
-				}
-				else {
-					return;
-				}
+				space.textContent = mark;
+				console.log(`In space listener mark: ${mark}`);
+				return;
 			});
 		});
 	};
 
-	return { gameArea, displayMoves };
+	return { spaceListeners };
 };
 
-// factory
-const Player = (name, marker) => {
-	const player = () => {
-		return name;
-	};
-	const mark = () => {
-		return marker;
-	};
-	return { player, mark };
+// factory for making players
+const Player = (name, mark) => {
+	const playerName = name;
+	const playerMark = mark;
+	return { playerName, playerMark };
 };
 
-// module
+// module to control game itself
 const gameFlow = (() => {
-	const playerOne = Player(prompt('What Shall We Call You?', 'Player'), 'X');
-	const playerTwo = Player('Comp', 'O');
-
+	console.log('inside gameFlow');
 	const p1 = document.querySelector('.playerOne');
 	const p2 = document.querySelector('.playerTwo');
 
-	// display players and their respective marks
-	p1.textContent = `${playerOne.player()} [${playerOne.mark()}]`;
-	p2.textContent = `${playerTwo.player()} [${playerTwo.mark()}]`;
+	const playerOne = Player('CP', 'X');
+	const playerTwo = Player('Comp', 'O');
 
-	playerOne.player();
-	playerOne.mark();
-	playerTwo.player();
-	playerTwo.mark();
+	p1.textContent = playerOne.playerName;
+	p2.textContent = playerTwo.playerName;
 
-	// what actually displays in the gameboard
-	const p1Moves = gameBoard('X');
-	const p2Moves = gameBoard('O');
+	const markSpace = (() => {
+		console.log('inside markSpace');
+		const p1mark = playerOne.playerMark;
+		const p2mark = playerTwo.playerMark;
 
-	p1Moves.displayMoves();
-	// p2Moves.displayMoves();
+		const gameSpace = Gameboard();
+
+		let p1turn = true;
+		console.log(`P1 Turn: ${p1turn}`);
+
+		if ((p1turn = true)) {
+			!p1turn;
+			return gameSpace.spaceListeners(p1mark);
+		}
+		else {
+			!p1turn;
+			return gameSpace.spaceListeners(p2mark);
+		}
+	})();
 })();
