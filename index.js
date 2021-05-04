@@ -25,9 +25,15 @@ const Gameboard = () => {
 	const spaceListeners = (mark) => {
 		gameBoard.forEach((space) => {
 			space.addEventListener('click', () => {
-				space.textContent = mark;
-				console.log(`In space listener mark: ${mark}`);
-				return;
+				if ((space.textContent = ' ')) {
+					space.textContent = mark;
+					console.log(
+						`In space listener; mark: '${mark}' -- space.textContent: '${space.textContent}'`
+					);
+				}
+				else {
+					alert('Please choose an unoccupied space');
+				}
 			});
 		});
 	};
@@ -48,6 +54,9 @@ const gameFlow = (() => {
 	const p1 = document.querySelector('.playerOne');
 	const p2 = document.querySelector('.playerTwo');
 
+	// const p1Name = playerOne.textContent;
+	// const p2Name = playerTwo.textContent;
+
 	const playerOne = Player('CP', 'X');
 	const playerTwo = Player('Comp', 'O');
 
@@ -66,11 +75,11 @@ const gameFlow = (() => {
 
 		if ((p1turn = true)) {
 			!p1turn;
-			return gameSpace.spaceListeners(p1mark);
+			gameSpace.spaceListeners(p1mark);
 		}
 		else {
 			!p1turn;
-			return gameSpace.spaceListeners(p2mark);
+			gameSpace.spaceListeners(p2mark);
 		}
 	})();
 })();
