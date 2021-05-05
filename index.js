@@ -25,11 +25,8 @@ const Gameboard = () => {
 	const spaceListeners = (mark) => {
 		gameBoard.forEach((space) => {
 			space.addEventListener('click', () => {
-				if ((space.textContent = ' ')) {
+				if (space.textContent === '') {
 					space.textContent = mark;
-					console.log(
-						`In space listener; mark: '${mark}' -- space.textContent: '${space.textContent}'`
-					);
 				}
 				else {
 					alert('Please choose an unoccupied space');
@@ -63,22 +60,25 @@ const gameFlow = (() => {
 	p1.textContent = playerOne.playerName;
 	p2.textContent = playerTwo.playerName;
 
+	let p1turn = true;
+
 	const markSpace = (() => {
 		console.log('inside markSpace');
 		const p1mark = playerOne.playerMark;
+		console.log(`P1 Mark: ${p1mark}`);
 		const p2mark = playerTwo.playerMark;
+		console.log(`P2 Mark: ${p2mark}`);
 
 		const gameSpace = Gameboard();
 
-		let p1turn = true;
 		console.log(`P1 Turn: ${p1turn}`);
 
 		if ((p1turn = true)) {
-			!p1turn;
+			p1turn = !p1turn;
 			gameSpace.spaceListeners(p1mark);
 		}
 		else {
-			!p1turn;
+			p1turn = !p1turn;
 			gameSpace.spaceListeners(p2mark);
 		}
 	})();
