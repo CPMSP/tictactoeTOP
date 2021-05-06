@@ -22,20 +22,31 @@ const Gameboard = () => {
 		s9
 	];
 
-	const spaceListeners = (mark) => {
+	const message = document.querySelector('.message');
+
+	const markSpace = (mark) => {
 		gameBoard.forEach((space) => {
 			space.addEventListener('click', () => {
 				if (space.textContent === '') {
 					space.textContent = mark;
 				}
 				else {
-					alert('Please choose an unoccupied space');
+					message.textContent = 'Please choose an unoccupied space';
+					setTimeout(() => {
+						message.textContent = '';
+					}, 1000);
 				}
 			});
 		});
 	};
 
-	return { spaceListeners };
+	const clearAll = () => {
+		gameBoard.forEach((space) => {
+			space.textContent = '';
+		});
+	};
+
+	return { markSpace, clearAll };
 };
 
 // factory for making players
@@ -47,12 +58,8 @@ const Player = (name, mark) => {
 
 // module to control game itself
 const gameFlow = (() => {
-	console.log('inside gameFlow');
 	const p1 = document.querySelector('.playerOne');
 	const p2 = document.querySelector('.playerTwo');
-
-	// const p1Name = playerOne.textContent;
-	// const p2Name = playerTwo.textContent;
 
 	const playerOne = Player('CP', 'X');
 	const playerTwo = Player('Comp', 'O');
@@ -60,26 +67,41 @@ const gameFlow = (() => {
 	p1.textContent = playerOne.playerName;
 	p2.textContent = playerTwo.playerName;
 
-	let p1turn = true;
+	const p1mark = playerOne.playerMark;
+	const p2mark = playerTwo.playerMark;
 
-	const markSpace = (() => {
-		console.log('inside markSpace');
-		const p1mark = playerOne.playerMark;
-		console.log(`P1 Mark: ${p1mark}`);
-		const p2mark = playerTwo.playerMark;
-		console.log(`P2 Mark: ${p2mark}`);
+	const gameSpace = Gameboard();
+	const spaceToMark = gameSpace.markSpace;
 
-		const gameSpace = Gameboard();
+	let turnCount = 0;
 
-		console.log(`P1 Turn: ${p1turn}`);
+	const message = document.querySelector('.message');
 
-		if ((p1turn = true)) {
-			p1turn = !p1turn;
-			gameSpace.spaceListeners(p1mark);
+	const checkIsWinner = () => {
+		if (winningConditions) {
+			message.textContent = 'Winner';
 		}
 		else {
-			p1turn = !p1turn;
-			gameSpace.spaceListeners(p2mark);
+			message.textContent = 'Tie Game';
 		}
-	})();
+		setTimeout(gameSpace.clearAll(), 5000);
+	};
+	const turnSequence = () => {
+		if (turnCount < 9) {
+			if (turnCount % 2 === 0) {
+				spaceToMark(p1mark);
+				console.log(`p1 turn: ${turnCount}`);
+			}
+			else {
+				spaceToMark(p2mark);
+				console.log(`p2 turn: ${turnCount}`);
+			}
+			turnCount++;
+			console.log(`turncount: ${turnCount}`);
+		}
+		else {
+			checkIsWinner();
+		}
+	};
+	turnSequence();
 })();

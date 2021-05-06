@@ -16,6 +16,10 @@ body {
 	justify-content: center;
 }
 
+.message {
+	height: 1rem;
+}
+
 .playerInfo {
 	display: grid;
 	grid-template-columns: repeat(2, minmax(100px, 1fr));
