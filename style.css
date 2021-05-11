@@ -21,18 +21,23 @@ body {
 }
 
 .playerInfo {
-	display: grid;
-	grid-template-columns: repeat(2, minmax(100px, 1fr));
-	gap: .5rem;
-	margin: 2rem auto;
+	width: 80%;
+	display: flex;
+	justify-content: space-between;
+	margin: 1rem auto;
 }
 
 .playerOne {
-	justify-self: center;
+	width: 5rem;
+}
+
+.startGame {
+	width: 3rem;
+	margin: 1rem auto;
 }
 
 .playerTwo {
-	justify-self: center;
+	width: 5rem;
 }
 
 .gameArea {
