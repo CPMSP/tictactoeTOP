@@ -62,11 +62,11 @@ const gameFlow = (() => {
 
 	const start = document.querySelector('.startGame');
 
-	const p1 = document.querySelector('.playerOne').value;
-	const p2 = document.querySelector('.playerTwo').value;
+	const p1 = document.getElementById('playerOne');
+	const p2 = document.getElementById('playerTwo');
 
-	const p1Name = p1;
-	const p2Name = p2;
+	const p1Name = p1.value;
+	const p2Name = p2.value;
 
 	const playerOne = Player(p1Name, 'X');
 	const playerTwo = Player(p2Name, 'O');

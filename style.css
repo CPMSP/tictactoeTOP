@@ -23,7 +23,7 @@ body {
 .playerInfo {
 	width: 80%;
 	display: flex;
-	justify-content: space-between;
+	justify-content: space-around;
 	margin: 1rem auto;
 }
 
