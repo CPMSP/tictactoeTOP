@@ -62,25 +62,25 @@ const gameFlow = (() => {
 
 	const start = document.querySelector('.startGame');
 
-	const p1 = document.getElementById('playerOne');
-	const p2 = document.getElementById('playerTwo');
+	// const p1 = document.querySelector('.playerOne');
+	// const p2 = document.querySelector('.playerTwo');
 
-	const p1Name = p1.value;
-	const p2Name = p2.value;
+	const playerOne = Player('CP', 'X');
+	const playerTwo = Player('Comp', 'O');
 
-	const playerOne = Player(p1Name, 'X');
-	const playerTwo = Player(p2Name, 'O');
+	const p1Name = playerOne.name;
+	const p2Name = playerTwo.name;
 
-	const p1label = document.createElement('div');
-	const p2label = document.createElement('div');
-	p1label.textContent = p1Name;
-	p2label.textContent = p2Name;
+	// const p1label = document.createElement('div');
+	// const p2label = document.createElement('div');
+	// p1label.textContent = p1Name;
+	// p2label.textContent = p2Name;
 
 	start.addEventListener('click', () => {
 		console.log(p1Name);
 		console.log(p2Name);
-		players.append(p1label, p2label);
-		players.remove(p1, p2);
+		// players.append(p1label, p2label);
+		// players.remove(p1, p2);
 	});
 
 	// p1.textContent = playerOne.name;
