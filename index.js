@@ -1,4 +1,4 @@
-// module for gameboard, with gameboard spaces array
+// module for gameSpace, with gameSpace spaces array
 const Gameboard = () => {
 	const s1 = document.querySelector('.space1');
 	const s2 = document.querySelector('.space2');
@@ -10,7 +10,7 @@ const Gameboard = () => {
 	const s8 = document.querySelector('.space8');
 	const s9 = document.querySelector('.space9');
 
-	const gameBoard = [
+	const gameSpaces = [
 		s1,
 		s2,
 		s3,
@@ -25,7 +25,7 @@ const Gameboard = () => {
 	const message = document.querySelector('.message');
 
 	const markSpace = (mark) => {
-		gameBoard.forEach((space) => {
+		gameSpaces.forEach((space) => {
 			space.addEventListener('click', () => {
 				if (space.textContent === '') {
 					space.textContent = mark;
@@ -41,94 +41,92 @@ const Gameboard = () => {
 	};
 
 	const clearAll = () => {
-		gameBoard.forEach((space) => {
+		gameSpaces.forEach((space) => {
 			space.textContent = '';
 		});
 	};
 
-	return { markSpace, clearAll };
+	return { gameSpaces, markSpace, clearAll };
 };
 
 // factory for making players
 const Player = (name, mark) => {
-	// const name = name;
-	// const mark = mark;
 	return { name, mark };
 };
 
 // module to control game itself
 const gameFlow = (() => {
-	const players = document.querySelector('.playerInfo');
-
 	const start = document.querySelector('.startGame');
+	const message = document.querySelector('.message');
 
-	// const p1 = document.querySelector('.playerOne');
-	// const p2 = document.querySelector('.playerTwo');
+	const p1 = document.querySelector('.playerOne');
+	const p2 = document.querySelector('.playerTwo');
 
-	const playerOne = Player('CP', 'X');
-	const playerTwo = Player('Comp', 'O');
-
-	const p1Name = playerOne.name;
-	const p2Name = playerTwo.name;
-
-	// const p1label = document.createElement('div');
-	// const p2label = document.createElement('div');
-	// p1label.textContent = p1Name;
-	// p2label.textContent = p2Name;
+	const playerOne = Player('Player 1', 'X');
+	const playerTwo = Player('Player 2', 'O');
 
 	start.addEventListener('click', () => {
-		console.log(p1Name);
-		console.log(p2Name);
-		// players.append(p1label, p2label);
-		// players.remove(p1, p2);
+		game();
 	});
 
-	// p1.textContent = playerOne.name;
-	// p2.textContent = playerTwo.name;
+	p1.textContent = playerOne.name;
+	p2.textContent = playerTwo.name;
 
 	const p1mark = playerOne.mark;
 	const p2mark = playerTwo.mark;
 
-	const gameSpace = Gameboard();
-	const spaceToMark = gameSpace.markSpace;
+	const gameController = Gameboard();
+	const spaceToMark = gameController.markSpace;
 
 	let turnCount = 0;
-	let p1turn = true;
 
-	const message = document.querySelector('.message');
+	const boardSpaces = gameController.gameSpaces;
+	boardSpaces.forEach((space) => {
+		space.addEventListener('click', () => {
+			console.log('clicked');
+			// turnCount++;
+			// game();
+		});
+	});
+
+	const clear = gameController.clearAll;
+
+	// const winningConditions = [];
+
+	let winningConditions = null;
+
+	const turnSequence = (mark) => {
+		spaceToMark(mark);
+		turnCount++;
+		console.log(`turncount: #${turnCount}, mark: ${mark}`);
+	};
 
 	const checkIsWinner = () => {
 		if (winningConditions) {
 			message.textContent = 'Winner';
 		}
-		else {
+		else if (!winningConditions) {
 			message.textContent = 'Tie Game';
 		}
 		turnCount = 0;
-		p1turn = true;
-		setTimeout(gameSpace.clearAll(), 5000);
+		setTimeout(clear, 5000);
 	};
 
-	const turnSequence = () => {
-		if (p1turn === true) {
-			spaceToMark(p1mark);
-			console.log(`p1 turn: ${turnCount}, ${p1turn}`);
+	const game = () => {
+		if (turnCount < 9 && winningConditions === null) {
+			if (turnCount % 2 === 0) {
+				console.log(`p1mk; TC %: ${turnCount % 2}`);
+				turnSequence(p1mark);
+			}
+			else if (turnCount % 2 !== 0) {
+				console.log(`p2mk; TC %: ${turnCount % 2}`);
+				turnSequence(p2mark);
+			}
 		}
 		else {
-			spaceToMark(p2mark);
-			console.log(`p2 turn: ${turnCount}, ${p1turn}`);
-		}
-		turnCount++;
-		p1turn = !p1turn;
-		console.log(`turncount: ${turnCount}, ${p1turn}`);
-	};
-
-	const game = (() => {
-		if (turnCount < 9) {
-			turnSequence();
-		}
-		else {
+			winningConditions = true;
+			console.log('Winner');
 			checkIsWinner();
 		}
-	})();
+	};
 })();
